@@ -8,7 +8,7 @@ from tagnify.exceptions import OutputParserError
 
 class OutputParser:
     def parse(self, raw_text: str) -> dict:
-        if not raw_text or raw_text.strip():
+        if not raw_text or not raw_text.strip():
             raise OutputParserError(
                 "LLM returned an empty response."
                 "The model may not be loaded yet or the prompt may be too long."

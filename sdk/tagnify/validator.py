@@ -5,6 +5,20 @@ from tagnify.exceptions import ValidationError
 
 class Validator:
 
+    def validate(self, parsed: dict, schema: Schema) -> dict:
+        label = self._validate_label(parsed, schema)
+        confidence = self._validate_confidence(parsed)
+
+        #Reasoning is optional
+        reasoning = parsed.get("reasoning")
+        if reasoning is not None and not isinstance(reasoning, str):
+            reasoning = str(reasoning)
+
+        return {
+            "label": label,
+            "confidence": confidence,
+            "reasoning": reasoning,
+        }
 
     #validation functions
     def _validate_label(self, parsed: dict, schema: Schema) -> dict:

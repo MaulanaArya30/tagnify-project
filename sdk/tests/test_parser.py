@@ -11,7 +11,7 @@ the whole point of this class is to handle what models actually produce.
 
 import pytest
 from tagnify.parser import OutputParser
-from tagnify.exceptions import OutputParseError
+from tagnify.exceptions import OutputParserError
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -162,29 +162,29 @@ class TestCommonSyntaxFixes:
 class TestOutputParserFailures:
 
     def test_empty_string_raises(self):
-        with pytest.raises(OutputParseError):
+        with pytest.raises(OutputParserError):
             parse("")
 
     def test_whitespace_only_raises(self):
-        with pytest.raises(OutputParseError):
+        with pytest.raises(OutputParserError):
             parse("   \n\t  ")
 
     def test_plain_text_raises(self):
         """Model ignored format entirely and returned natural language."""
-        with pytest.raises(OutputParseError):
+        with pytest.raises(OutputParserError):
             parse("I think this text is positive with high confidence.")
 
     def test_partial_json_raises(self):
         """Truncated or broken JSON that can't be recovered."""
-        with pytest.raises(OutputParseError):
+        with pytest.raises(OutputParserError):
             parse('{"label": "positive", "confide')
 
     def test_raises_output_parse_error_type(self):
-        """Exception type must be OutputParseError specifically."""
-        with pytest.raises(OutputParseError):
+        """Exception type must be OutputParserError specifically."""
+        with pytest.raises(OutputParserError):
             parse("not json at all")
 
     def test_output_parse_error_is_tagnify_error(self):
-        """OutputParseError can be caught with the base TagnifyError."""
+        """OutputParserError can be caught with the base TagnifyError."""
         from tagnify.exceptions import TagnifyError
-        assert issubclass(OutputParseError, TagnifyError)
+        assert issubclass(OutputParserError, TagnifyError)
